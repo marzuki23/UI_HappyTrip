@@ -1,27 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/profile_controller.dart';
-import '../../home/controllers/home_controller.dart';
-import '../../../widgets/bottom_nav_widget.dart';
-import '../../../widgets/header_widget.dart';
 
 class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controllerHome = Get.find<HomeController>();
-    controllerHome.selectedIndex.value = 2;
-
-    return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-
-      body: SafeArea(
-        child: Column(
-          children: [
-            const HeaderWidget(),
-
-            const SizedBox(height: 30),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      child: Column(
+        children: [
+          const SizedBox(height: 10),
 
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -105,27 +95,24 @@ class ProfileView extends GetView<ProfileController> {
               ),
             ),
 
-            const Spacer(),
+            const SizedBox(height: 25),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: OutlinedButton.icon(
-                  onPressed: () {
-                    Get.snackbar("Logout", "Anda telah logout");
-                  },
-                  icon: const Icon(Icons.logout, color: Colors.red),
-                  label: const Text(
-                    "Logout",
-                    style: TextStyle(color: Colors.red),
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Colors.red),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: OutlinedButton.icon(
+                onPressed: () {
+                  Get.snackbar("Logout", "Anda telah logout");
+                },
+                icon: const Icon(Icons.logout, color: Colors.red),
+                label: const Text(
+                  "Logout",
+                  style: TextStyle(color: Colors.red),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Colors.red),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
                   ),
                 ),
               ),
@@ -134,9 +121,6 @@ class ProfileView extends GetView<ProfileController> {
             const SizedBox(height: 20),
           ],
         ),
-      ),
-
-      bottomNavigationBar: BottomNavWidget(controller: controllerHome),
-    );
+      );
   }
 }

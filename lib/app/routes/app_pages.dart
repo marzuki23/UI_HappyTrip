@@ -8,9 +8,7 @@ import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
-import '../modules/trip/bindings/trip_binding.dart';
 import '../modules/trip/views/trip_view.dart';
-import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 
 part 'app_routes.dart';
@@ -43,13 +41,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.TRIP,
-      page: () => const TripView(),
-      binding: TripBinding(),
+      page: () => const HomeView(initialIndex: 1),
+      binding: HomeBinding(),
     ),
     GetPage(
       name: _Paths.PROFILE,
-      page: () => const ProfileView(),
-      binding: ProfileBinding(),
+      page: () => const HomeView(initialIndex: 2),
+      binding: HomeBinding(),
     ),
   ];
 }
