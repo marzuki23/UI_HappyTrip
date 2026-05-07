@@ -11,9 +11,8 @@ class BottomNavWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => SafeArea(
-        // SafeArea memastikan widget tidak tertutup tombol navigasi HP
         child: Container(
-          margin: const EdgeInsets.fromLTRB(16, 0, 16, 10), // Jarak margin disesuaikan
+          margin: const EdgeInsets.fromLTRB(16, 0, 16, 10),
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -49,7 +48,9 @@ class BottomNavWidget extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
-                            Icons.home_filled,
+                            controller.selectedIndex.value == 0 
+                                ? Icons.home_filled 
+                                : Icons.home_outlined,
                             color: controller.selectedIndex.value == 0
                                 ? Colors.blue
                                 : Colors.grey,
@@ -143,10 +144,14 @@ class BottomNavWidget extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
-                            Icons.person_pin,
+                            // Menggunakan Icons.person_outline agar lebih sesuai dengan desain modern di foto
+                            controller.selectedIndex.value == 2 
+                                ? Icons.person 
+                                : Icons.person_outline,
                             color: controller.selectedIndex.value == 2
                                 ? Colors.blue
                                 : Colors.grey,
+                            size: 24,
                           ),
                           const SizedBox(height: 4),
                           Text(
