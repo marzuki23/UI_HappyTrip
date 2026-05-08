@@ -10,6 +10,7 @@ import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/trip/views/trip_view.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/recommendation/views/recommendation_view.dart';
 
 part 'app_routes.dart';
 
@@ -48,6 +49,10 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => const HomeView(initialIndex: 2),
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: '/recommendation',
+      page: () => const RecommendationView(),
     ),
   ];
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/trip_controller.dart';
+import '../../../routes/app_pages.dart';
 
 class TripView extends GetView<TripController> {
   const TripView({super.key});
@@ -197,7 +198,9 @@ class TripView extends GetView<TripController> {
                   width: double.infinity,
                   height: 54,
                   child: ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed(Routes.RECOMMENDATION); // ⬅️ Tambahkan ini
+                    },
                     icon: const Icon(Icons.auto_awesome_rounded, color: Colors.white),
                     label: const Text(
                       "Lihat Rekomendasi",
