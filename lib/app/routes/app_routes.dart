@@ -10,6 +10,7 @@ abstract class Routes {
   static const TRIP = _Paths.TRIP;
   static const PROFILE = _Paths.PROFILE;
   static const RECOMMENDATION = _Paths.RECOMMENDATION;
+  static const ITINERARY = _Paths.ITINERARY;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const TRIP = '/trip';
   static const PROFILE = '/profile';
   static const RECOMMENDATION = '/recommendation';
+  static const ITINERARY = '/itinerary';
 }
