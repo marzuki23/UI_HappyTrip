@@ -1,23 +1,26 @@
 import 'package:get/get.dart';
 
 class RecommendationController extends GetxController {
-  //TODO: Implement RecommendationController
+  // 1. Simpan index yang dipilih dalam list reaktif
+  var selectedIndices = <int>[].obs;
 
-  var selectedIndex = (-1).obs;
-
-  // Fungsi untuk memilih kartu (Toggle: klik lagi untuk batal pilih)
+  // 2. Fungsi untuk menambah/menghapus index (Toggle)
   void selectCard(int index) {
-    if (selectedIndex.value == index) {
-      selectedIndex.value = -1;
+    if (selectedIndices.contains(index)) {
+      selectedIndices.remove(index);
     } else {
-      selectedIndex.value = index;
+      selectedIndices.add(index);
     }
   }
 
-  // Getter untuk mengecek status seleksi
-  bool get isAnySelected => selectedIndex.value != -1;
-  
+  // 3. Helper untuk mengecek status di View
+  bool isSelected(int index) => selectedIndices.contains(index);
+
+  // 4. Getter untuk mengaktifkan tombol
+  bool get isAnySelected => selectedIndices.isNotEmpty;
+
   final count = 0.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -34,4 +37,4 @@ class RecommendationController extends GetxController {
   }
 
   void increment() => count.value++;
-}
+} // <-- Pastikan hanya ada satu kurung kurawal penutup di paling akhir file

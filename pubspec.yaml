@@ -61,6 +61,10 @@ flutter:
   assets:
     - assets/images/logo.png
     - assets/images/dieng.jpg
+    - assets/images/Bukit-Sikunir.jpg
+    - assets/images/kawah sikidang.jpg
+    - assets/images/gunung sumbing.jpg
+    - assets/images/gunung-sindoro.jpg
     - assets/images/karimun.jpg
     - assets/images/google.png
   # To add assets to your application, add an assets section, like this:

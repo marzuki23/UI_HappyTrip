@@ -19,7 +19,7 @@ class RecommendationView extends GetView<RecommendationController> {
               child: Stack(
                 children: [
                   SingleChildScrollView(
-                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 100),
+                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 120),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -35,7 +35,7 @@ class RecommendationView extends GetView<RecommendationController> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          "Pilih destinasi yang paling Anda sukai untuk menyusun rencana perjalanan.",
+                          "Pilih beberapa destinasi favorit Anda untuk menyusun itinerary yang sempurna.",
                           style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
                         ),
                         const SizedBox(height: 25),
@@ -43,25 +43,41 @@ class RecommendationView extends GetView<RecommendationController> {
                         // --- LIST REKOMENDASI ---
                         Obx(() => _buildTripCard(
                           index: 0,
-                          image: "assets/images/dieng.jpg",
-                          title: "Dieng",
-                          desc: "Dataran tinggi dengan pemandangan pegunungan dan kawah yang menakjubkan.",
+                          image: "assets/images/Bukit-Sikunir.jpg",
+                          title: "Bukit Sikunir",
+                          desc: "Destinasi wisata populer di Dataran Tinggi Dieng, Jawa Tengah, terkenal dengan pemandangan golden sunrise terbaik di Asia Tenggara.",
                           price: "Rp 50.000",
                           rating: "4.9",
                           isBestMatch: true,
                         )),
                         Obx(() => _buildTripCard(
                           index: 1,
-                          image: "assets/images/karimun.jpg",
-                          title: "Karimunjawa",
-                          desc: "Surga tropis dengan taman laut yang indah dan pasir putih bersih.",
-                          price: "Rp 8.200.000",
+                          image: "assets/images/kawah sikidang.jpg",
+                          title: "Kawah Sikidang",
+                          desc: "kawah vulkanik aktif terbesar di Dataran Tinggi Dieng.",
+                          price: "Rp 150.000",
                           rating: "4.8",
+                        )),
+                        Obx(() => _buildTripCard(
+                          index: 2,
+                          image: "assets/images/gunung sumbing.jpg",
+                          title: "Gunung Sumbing",
+                          desc: "Gunung api aktif bertipe stratovolcano tertinggi kedua di Jawa Tengah (setelah Gunung Slamet) dengan ketinggian 3.371 mdpl.",
+                          price: "Rp 50.000",
+                          rating: "5.0",
+                        )),
+                        Obx(() => _buildTripCard(
+                          index: 3,
+                          image: "assets/images/gunung-sindoro.jpg",
+                          title: "Gunung Sindoro",
+                          desc: "Gunung stratovolcano aktif yang terletak di Jawa Tengah, berbatasan dengan Kabupaten Temanggung dan Wonosobo.",
+                          price: "Rp 25.000",
+                          rating: "4.7",
                         )),
                       ],
                     ),
                   ),
-                  // Tombol melayang di bawah yang reaktif terhadap pilihan
+                  // Tombol dinamis di bagian bawah
                   _buildBottomButton(),
                 ],
               ),
@@ -99,7 +115,7 @@ class RecommendationView extends GetView<RecommendationController> {
     required String rating,
     bool isBestMatch = false,
   }) {
-    final isSelected = controller.selectedIndex.value == index;
+    final isSelected = controller.isSelected(index);
 
     return AnimatedScale(
       scale: isSelected ? 1.03 : 1.0,
@@ -139,8 +155,14 @@ class RecommendationView extends GetView<RecommendationController> {
                       height: 180,
                       width: double.infinity,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        height: 180, 
+                        color: Colors.grey[200], 
+                        child: const Icon(Icons.image_not_supported)
+                      ),
                     ),
                   ),
+                  // Badge Indikator Terpilih (Centang)
                   if (isSelected)
                     Positioned(
                       top: 12,
@@ -154,6 +176,7 @@ class RecommendationView extends GetView<RecommendationController> {
                         child: const Icon(Icons.check, color: Colors.white, size: 16),
                       ),
                     ),
+                  // Rating Badge
                   Positioned(
                     top: 12,
                     left: 12,
@@ -194,6 +217,7 @@ class RecommendationView extends GetView<RecommendationController> {
                             color: Color(0xFF0061A8)
                           )
                         ),
+                        // Icon berubah sesuai status seleksi
                         Icon(
                           isSelected ? Icons.check_circle : Icons.add_circle_outline, 
                           color: const Color(0xFF0061A8)
@@ -215,6 +239,8 @@ class RecommendationView extends GetView<RecommendationController> {
       alignment: Alignment.bottomCenter,
       child: Obx(() {
         final bool active = controller.isAnySelected;
+        final int totalSelected = controller.selectedIndices.length;
+
         return Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
@@ -236,10 +262,11 @@ class RecommendationView extends GetView<RecommendationController> {
                 elevation: active ? 8 : 0,
               ),
               child: Text(
-                active ? "Buat Itinerary Sekarang" : "Pilih Salah Satu Destinasi",
+                active ? "Buat Itinerary ($totalSelected Lokasi)" : "Pilih Destinasi Dahulu",
                 style: TextStyle(
                   color: active ? Colors.white : Colors.grey.shade600, 
-                  fontWeight: FontWeight.bold
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16
                 ),
               ),
             ),
