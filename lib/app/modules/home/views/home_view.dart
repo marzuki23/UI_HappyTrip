@@ -56,7 +56,7 @@ class _HomeViewState extends State<HomeView> {
 }
 
 class _HomeContent extends StatelessWidget {
-  const _HomeContent({super.key});
+  const _HomeContent();
 
   @override
   Widget build(BuildContext context) {

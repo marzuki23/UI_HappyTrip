@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/login_controller.dart';
 import '../../../routes/app_pages.dart';
+import 'package:happytrip/app/modules/forgot_password/views/forgot_password_view.dart';
 
 class LoginView extends GetView<LoginController> {
   const LoginView({super.key});
@@ -117,16 +118,17 @@ class LoginView extends GetView<LoginController> {
 
                             // LUPA PASSWORD
                             Align(
-                              alignment: Alignment.centerRight,
-                              child: TextButton(
-                                onPressed: () {},
-                                style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              onPressed: () {
+                                // Ini fungsi untuk pindah halaman
+                              Get.to(() => const ForgotPasswordView()); 
+                                },
                                 child: const Text(
                                   "Lupa Password?",
                                   style: TextStyle(
                                     color: Color(0xFF0061A8),
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),

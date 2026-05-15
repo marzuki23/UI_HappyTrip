@@ -14,6 +14,11 @@ import '../modules/register/views/register_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 // import '../modules/trip/views/trip_view.dart';
+// Import View dan Binding Lupa Passwordmu di sini
+import '../modules/forgot_password/bindings/forgot_password_binding.dart';
+import '../modules/forgot_password/views/forgot_password_view.dart';
+
+
 
 part 'app_routes.dart';
 
@@ -62,6 +67,11 @@ class AppPages {
       name: _Paths.ITINERARY,
       page: () => const ItineraryView(),
       binding: ItineraryBinding(),
+    ),
+    GetPage(
+      name: '/forgot-password',
+      page: () => const ForgotPasswordView(),
+      binding: ForgotPasswordBinding(),
     ),
   ];
 }
