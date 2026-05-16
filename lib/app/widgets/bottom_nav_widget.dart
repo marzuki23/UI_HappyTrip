@@ -5,7 +5,7 @@ import '../modules/home/controllers/home_controller.dart';
 class BottomNavWidget extends StatelessWidget {
   final HomeController controller;
 
-  const BottomNavWidget({Key? key, required this.controller}) : super(key: key);
+  const BottomNavWidget({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +48,8 @@ class BottomNavWidget extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
-                            controller.selectedIndex.value == 0 
-                                ? Icons.home_filled 
+                            controller.selectedIndex.value == 0
+                                ? Icons.home_filled
                                 : Icons.home_outlined,
                             color: controller.selectedIndex.value == 0
                                 ? Colors.blue
@@ -145,8 +145,8 @@ class BottomNavWidget extends StatelessWidget {
                         children: [
                           Icon(
                             // Menggunakan Icons.person_outline agar lebih sesuai dengan desain modern di foto
-                            controller.selectedIndex.value == 2 
-                                ? Icons.person 
+                            controller.selectedIndex.value == 2
+                                ? Icons.person
                                 : Icons.person_outline,
                             color: controller.selectedIndex.value == 2
                                 ? Colors.blue

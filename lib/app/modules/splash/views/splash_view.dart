@@ -13,8 +13,9 @@ class SplashView extends GetView<SplashController> {
         child: LayoutBuilder(
           builder: (context, constraints) {
             // BATASI LEBAR (WEB/TABLET)
-            double maxWidth =
-                constraints.maxWidth > 600 ? 400 : constraints.maxWidth;
+            double maxWidth = constraints.maxWidth > 600
+                ? 400
+                : constraints.maxWidth;
 
             return Center(
               child: ConstrainedBox(
@@ -29,8 +30,10 @@ class SplashView extends GetView<SplashController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // LOGO RESPONSIVE
-                        Container(
-                          width: maxWidth * 0.45, // Sedikit diperbesar agar proporsional
+                        SizedBox(
+                          width:
+                              maxWidth *
+                              0.45, // Sedikit diperbesar agar proporsional
                           height: maxWidth * 0.45,
                           child: Image.asset(
                             "assets/images/logo.png",
@@ -55,7 +58,7 @@ class SplashView extends GetView<SplashController> {
                         const Text(
                           "Effortless Exploration",
                           style: TextStyle(
-                            fontSize: 16, 
+                            fontSize: 16,
                             color: Colors.grey,
                             letterSpacing: 0.5,
                           ),
@@ -71,17 +74,25 @@ class SplashView extends GetView<SplashController> {
                         children: [
                           Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: maxWidth * 0.25), // ProgressBar lebih ramping
+                              horizontal: maxWidth * 0.25,
+                            ), // ProgressBar lebih ramping
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10), // Membulatkan ProgressBar
+                              borderRadius: BorderRadius.circular(
+                                10,
+                              ), // Membulatkan ProgressBar
                               child: const LinearProgressIndicator(
-                                minHeight: 6, // Sedikit lebih tebal agar terlihat modern
+                                minHeight:
+                                    6, // Sedikit lebih tebal agar terlihat modern
                                 backgroundColor: Colors.white,
-                                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.blue,
+                                ),
                               ),
                             ),
                           ),
-                          const SizedBox(height: 60), // Memberi ruang di bawah agar tidak terlalu mepet
+                          const SizedBox(
+                            height: 60,
+                          ), // Memberi ruang di bawah agar tidak terlalu mepet
                         ],
                       ),
                     ),

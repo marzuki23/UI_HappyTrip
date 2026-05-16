@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/login_controller.dart';
 import '../../../routes/app_pages.dart';
-import 'package:happytrip/app/modules/forgot_password/views/forgot_password_view.dart';
 
 class LoginView extends GetView<LoginController> {
   const LoginView({super.key});
@@ -16,7 +15,9 @@ class LoginView extends GetView<LoginController> {
         child: LayoutBuilder(
           builder: (context, constraints) {
             // Responsivitas untuk layar lebar (Web/Tablet)
-            double maxWidth = constraints.maxWidth > 600 ? 400 : constraints.maxWidth * 0.9;
+            double maxWidth = constraints.maxWidth > 600
+                ? 400
+                : constraints.maxWidth * 0.9;
 
             return Center(
               child: SingleChildScrollView(
@@ -38,7 +39,7 @@ class LoginView extends GetView<LoginController> {
                                   color: Colors.blue.withOpacity(0.1),
                                   blurRadius: 20,
                                   offset: const Offset(0, 10),
-                                )
+                                ),
                               ],
                             ),
                             child: Image.asset(
@@ -46,8 +47,12 @@ class LoginView extends GetView<LoginController> {
                               width: 60,
                               height: 60,
                               fit: BoxFit.contain,
-                              errorBuilder: (context, error, stackTrace) => 
-                                  const Icon(Icons.explore, size: 40, color: Color(0xFF0061A8)),
+                              errorBuilder: (context, error, stackTrace) =>
+                                  const Icon(
+                                    Icons.explore,
+                                    size: 40,
+                                    color: Color(0xFF0061A8),
+                                  ),
                             ),
                           ),
                           const SizedBox(height: 16),
@@ -86,7 +91,7 @@ class LoginView extends GetView<LoginController> {
                               color: Colors.black.withOpacity(0.04),
                               blurRadius: 24,
                               offset: const Offset(0, 12),
-                            )
+                            ),
                           ],
                         ),
                         child: Column(
@@ -118,11 +123,11 @@ class LoginView extends GetView<LoginController> {
 
                             // LUPA PASSWORD
                             Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                              onPressed: () {
-                                // Ini fungsi untuk pindah halaman
-                              Get.to(() => const ForgotPasswordView()); 
+                              alignment: Alignment.centerRight,
+                              child: TextButton(
+                                onPressed: () {
+                                  // Ini fungsi untuk pindah halaman
+                                  Get.toNamed(Routes.FORGOT_PASSWORD);
                                 },
                                 child: const Text(
                                   "Lupa Password?",
@@ -153,7 +158,7 @@ class LoginView extends GetView<LoginController> {
                                 child: const Text(
                                   "Login",
                                   style: TextStyle(
-                                    fontSize: 18, 
+                                    fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                     letterSpacing: 1,
                                   ),
@@ -166,19 +171,29 @@ class LoginView extends GetView<LoginController> {
                             // PEMISAH ATAU
                             Row(
                               children: [
-                                Expanded(child: Divider(color: Colors.grey.shade200, thickness: 1)),
+                                Expanded(
+                                  child: Divider(
+                                    color: Colors.grey.shade200,
+                                    thickness: 1,
+                                  ),
+                                ),
                                 const Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 10),
                                   child: Text(
                                     "ATAU",
                                     style: TextStyle(
-                                      color: Colors.grey, 
-                                      fontSize: 11, 
-                                      fontWeight: FontWeight.bold
+                                      color: Colors.grey,
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                                Expanded(child: Divider(color: Colors.grey.shade200, thickness: 1)),
+                                Expanded(
+                                  child: Divider(
+                                    color: Colors.grey.shade200,
+                                    thickness: 1,
+                                  ),
+                                ),
                               ],
                             ),
 
@@ -202,16 +217,20 @@ class LoginView extends GetView<LoginController> {
                                     Image.asset(
                                       "assets/images/google.png", // <--- Ganti dengan asset lokal kamu
                                       height: 22,
-                                      errorBuilder: (context, error, stackTrace) => 
-                                          const Icon(Icons.login, color: Colors.red),
+                                      errorBuilder:
+                                          (context, error, stackTrace) =>
+                                              const Icon(
+                                                Icons.login,
+                                                color: Colors.red,
+                                              ),
                                     ),
                                     const SizedBox(width: 12),
                                     const Text(
                                       "Login dengan Google",
                                       style: TextStyle(
-                                        color: Colors.black87, 
-                                        fontSize: 15, 
-                                        fontWeight: FontWeight.w600
+                                        color: Colors.black87,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ],
@@ -227,7 +246,10 @@ class LoginView extends GetView<LoginController> {
                               children: [
                                 const Text(
                                   "Belum punya akun? ",
-                                  style: TextStyle(color: Colors.black54, fontSize: 13),
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 13,
+                                  ),
                                 ),
                                 GestureDetector(
                                   onTap: () => Get.toNamed("/register"),
@@ -239,9 +261,9 @@ class LoginView extends GetView<LoginController> {
                                       fontSize: 13,
                                     ),
                                   ),
-                                )
+                                ),
                               ],
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -264,21 +286,27 @@ class LoginView extends GetView<LoginController> {
       child: Text(
         text,
         style: const TextStyle(
-          fontSize: 11, 
-          fontWeight: FontWeight.w800, 
+          fontSize: 11,
+          fontWeight: FontWeight.w800,
           color: Colors.black87,
-          letterSpacing: 0.5
+          letterSpacing: 0.5,
         ),
       ),
     );
   }
 
-  InputDecoration _inputStyle({required String hint, required IconData icon, IconData? suffixIcon}) {
+  InputDecoration _inputStyle({
+    required String hint,
+    required IconData icon,
+    IconData? suffixIcon,
+  }) {
     return InputDecoration(
       hintText: hint,
       hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
       prefixIcon: Icon(icon, color: Colors.black45, size: 20),
-      suffixIcon: suffixIcon != null ? Icon(suffixIcon, color: Colors.black38, size: 18) : null,
+      suffixIcon: suffixIcon != null
+          ? Icon(suffixIcon, color: Colors.black38, size: 18)
+          : null,
       filled: true,
       fillColor: const Color(0xFFF3F4F6), // Warna abu muda tipis
       contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
