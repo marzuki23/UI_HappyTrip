@@ -65,10 +65,17 @@ class TripView extends GetView<TripController> {
                     fontWeight: FontWeight.normal,
                   ),
                   items: ["Pantai", "Gunung", "Kota"]
-                      .map((e) => DropdownMenuItem(
-                            value: e,
-                            child: Text(e, style: const TextStyle(fontWeight: FontWeight.normal)),
-                          ))
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(
+                            e,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                      )
                       .toList(),
                   onChanged: (value) {},
                   decoration: _inputStyle(),
@@ -78,7 +85,10 @@ class TripView extends GetView<TripController> {
 
                 _buildLabel("LOKASI USER"),
                 TextField(
-                  style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 14,
+                  ),
                   decoration: _inputStyle(hint: "Masukkan lokasi Anda"),
                 ),
 
@@ -93,46 +103,20 @@ class TripView extends GetView<TripController> {
                     fontWeight: FontWeight.normal,
                   ),
                   items: ["Wonosobo", "Tegal", "Semarang", "Pekalongan"]
-                      .map((e) => DropdownMenuItem(
-                            value: e,
-                            child: Text(e, style: const TextStyle(fontWeight: FontWeight.normal)),
-                          ))
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(
+                            e,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                      )
                       .toList(),
                   onChanged: (value) {},
                   decoration: _inputStyle(),
-                ),
-
-                _buildSpacing(),
-
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildLabel("TANGGAL BERANGKAT"),
-                          TextField(
-                            style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
-                            decoration: _inputStyle(hint: "mm/dd/yyyy"),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 15),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildLabel("TANGGAL PULANG"),
-                          TextField(
-                            style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
-                            decoration: _inputStyle(hint: "mm/dd/yyyy"),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
                 ),
 
                 _buildSpacing(),
@@ -145,10 +129,17 @@ class TripView extends GetView<TripController> {
                     fontWeight: FontWeight.normal,
                   ),
                   items: ["Kendaraan Pribadi", "Kendaraan Umum"]
-                      .map((e) => DropdownMenuItem(
-                            value: e,
-                            child: Text(e, style: const TextStyle(fontWeight: FontWeight.normal)),
-                          ))
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(
+                            e,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                      )
                       .toList(),
                   onChanged: (value) {},
                   decoration: _inputStyle(),
@@ -167,7 +158,10 @@ class TripView extends GetView<TripController> {
                           _buildLabel("BUDGET PERJALANAN"),
                           TextField(
                             keyboardType: TextInputType.number,
-                            style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 14,
+                            ),
                             decoration: _inputStyle(hint: "Rp 0"),
                           ),
                         ],
@@ -182,7 +176,10 @@ class TripView extends GetView<TripController> {
                           _buildLabel("DURASI"),
                           TextField(
                             keyboardType: TextInputType.number,
-                            style: const TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 14,
+                            ),
                             decoration: _inputStyle(hint: "1 Hari"),
                           ),
                         ],
@@ -201,7 +198,10 @@ class TripView extends GetView<TripController> {
                     onPressed: () {
                       Get.toNamed(Routes.RECOMMENDATION); // ⬅️ Tambahkan ini
                     },
-                    icon: const Icon(Icons.auto_awesome_rounded, color: Colors.white),
+                    icon: const Icon(
+                      Icons.auto_awesome_rounded,
+                      color: Colors.white,
+                    ),
                     label: const Text(
                       "Lihat Rekomendasi",
                       style: TextStyle(
@@ -249,7 +249,11 @@ class TripView extends GetView<TripController> {
   InputDecoration _inputStyle({String? hint}) {
     return InputDecoration(
       hintText: hint,
-      hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 13, fontWeight: FontWeight.normal),
+      hintStyle: TextStyle(
+        color: Colors.grey.shade400,
+        fontSize: 13,
+        fontWeight: FontWeight.normal,
+      ),
       filled: true,
       fillColor: const Color(0xFFF8F9FA),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
