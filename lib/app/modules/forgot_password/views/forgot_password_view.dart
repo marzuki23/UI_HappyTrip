@@ -95,24 +95,35 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
               SizedBox(
                 width: double.infinity,
                 height: 56,
-                child: ElevatedButton(
-                  onPressed: () => controller.sendResetInstructions(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF0061A8),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                child: Obx(() { // <-- Tambahkan Obx di sini agar tombol bisa dinamis
+                  return ElevatedButton(
+                    onPressed: controller.isLoading.value 
+                        ? null 
+                        : () => controller.sendResetInstructions(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF0061A8),
+                      disabledBackgroundColor: const Color(0xFF0061A8).withOpacity(0.6),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      elevation: 0,
                     ),
-                    elevation: 0,
-                  ),
-                  child: const Text(
-                    "Kirim Instruksi",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+                    child: controller.isLoading.value
+                        ? const SizedBox(
+                            height: 24,
+                            width: 24,
+                            child: CircularProgressIndicator(color: Colors.white, strokeWidth: 3),
+                          )
+                        : const Text(
+                            "Kirim Instruksi",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                  );
+                }),
               ),
             ],
           ),

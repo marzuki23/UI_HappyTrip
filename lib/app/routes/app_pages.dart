@@ -1,19 +1,21 @@
 import 'package:get/get.dart';
 
+import '../modules/face_login/bindings/face_login_binding.dart';
+import '../modules/face_login/views/face_login_view.dart';
+import '../modules/forgot_password/bindings/forgot_password_binding.dart';
+import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/itinerary/bindings/itinerary_binding.dart';
 import '../modules/itinerary/views/itinerary_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
-import '../modules/recommendation/views/recommendation_view.dart';
 import '../modules/recommendation/bindings/recommendation_binding.dart';
+import '../modules/recommendation/views/recommendation_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
-import '../modules/forgot_password/bindings/forgot_password_binding.dart';
-import '../modules/forgot_password/views/forgot_password_view.dart';
 
 part 'app_routes.dart';
 
@@ -69,6 +71,11 @@ class AppPages {
       name: _Paths.FORGOT_PASSWORD,
       page: () => const ForgotPasswordView(),
       binding: ForgotPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.FACE_LOGIN,
+      page: () => const FaceLoginView(),
+      binding: FaceLoginBinding(),
     ),
   ];
 }

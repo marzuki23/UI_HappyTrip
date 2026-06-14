@@ -32,54 +32,45 @@ class ProfileView extends GetView<ProfileController> {
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.04),
-                            blurRadius: 25,
-                            offset: const Offset(0, 10),
+                            blurRadius: 24,
+                            offset: const Offset(0, 12),
                           ),
                         ],
                       ),
                       child: Column(
-                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          // AVATAR
+                          // Avatar Lingkaran Placeholder
                           Container(
                             width: 100,
                             height: 100,
                             decoration: BoxDecoration(
-                              color: const Color(0xFFD7E8F7),
+                              color: const Color(0xFF0061A8).withOpacity(0.1),
                               shape: BoxShape.circle,
-                              border: Border.all(color: Colors.white, width: 4),
                             ),
                             child: const Icon(
                               Icons.person_rounded,
-                              size: 60,
-                              color: Colors.blue,
+                              size: 54,
+                              color: Color(0xFF0061A8),
                             ),
                           ),
                           const SizedBox(height: 20),
-                          // NAMA
+                          // Menampilkan Nama Pengguna Dinamis dari Backend
                           Obx(() => Text(
                                 controller.userName.value,
                                 style: const TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xFF1A1A1A),
+                                  color: Color(0xFF1E293B),
                                 ),
                               )),
-                          const SizedBox(height: 8),
-                          // EMAIL
-                          Obx(() => Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFF3F4F6),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Text(
-                                  controller.userEmail.value,
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.grey[700],
-                                  ),
+                          const SizedBox(height: 6),
+                          // Menampilkan Email Pengguna Dinamis
+                          Obx(() => Text(
+                                controller.userEmail.value,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey.shade500,
+                                  fontWeight: FontWeight.w500, // <-- SUDAH DI-FIX DARI MEDIUM
                                 ),
                               )),
                         ],
@@ -88,16 +79,15 @@ class ProfileView extends GetView<ProfileController> {
                   ],
                 ),
 
-                // BAGIAN BAWAH: TOMBOL LOGOUT
+                // BAGIAN BAWAH: TOMBOL LOGOUT (SUDAH DIHUBUNGKAN KE CONTROLLER)
                 Padding(
                   padding: const EdgeInsets.only(top: 40),
                   child: SizedBox(
                     width: double.infinity,
                     height: 56,
                     child: ElevatedButton.icon(
-                      onPressed: () {
-                        Get.snackbar("Logout", "Anda telah logout");
-                      },
+                      // Memicu fungsi hapus session di controller secara aman
+                      onPressed: () => controller.logoutUser(), 
                       icon: const Icon(Icons.logout_rounded, color: Colors.white, size: 20),
                       label: const Text(
                         "Logout",

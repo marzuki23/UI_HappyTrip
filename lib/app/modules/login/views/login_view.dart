@@ -100,6 +100,8 @@ class LoginView extends GetView<LoginController> {
                             // FIELD EMAIL
                             _buildLabel("EMAIL"),
                             TextField(
+                              onChanged: (value) => controller.email.value = value,
+                              keyboardType: TextInputType.emailAddress,
                               decoration: _inputStyle(
                                 hint: "nama@email.com",
                                 icon: Icons.email_outlined,
@@ -108,16 +110,36 @@ class LoginView extends GetView<LoginController> {
 
                             const SizedBox(height: 20),
 
-                            // FIELD PASSWORD
+                            // FIELD PASSWORD DENGAN TOMBOL MATA (SINKRON KE CONTROLLER)
                             _buildLabel("PASSWORD"),
-                            TextField(
-                              obscureText: true,
-                              decoration: _inputStyle(
-                                hint: "••••••••",
-                                icon: Icons.lock_outline,
-                                suffixIcon: Icons.visibility_off_outlined,
-                              ),
-                            ),
+                            Obx(() {
+                              return TextField(
+                                onChanged: (value) => controller.password.value = value,
+                                obscureText: controller.isPasswordHidden.value,
+                                decoration: InputDecoration(
+                                  hintText: "••••••••",
+                                  hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
+                                  prefixIcon: const Icon(Icons.lock_outline, color: Colors.black45, size: 20),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      controller.isPasswordHidden.value
+                                          ? Icons.visibility_off_outlined
+                                          : Icons.visibility_outlined,
+                                      color: Colors.black38,
+                                      size: 18,
+                                    ),
+                                    onPressed: () => controller.togglePasswordVisibility(),
+                                  ),
+                                  filled: true,
+                                  fillColor: const Color(0xFFF3F4F6),
+                                  contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              );
+                            }),
 
                             const SizedBox(height: 12),
 
@@ -126,7 +148,6 @@ class LoginView extends GetView<LoginController> {
                               alignment: Alignment.centerRight,
                               child: TextButton(
                                 onPressed: () {
-                                  // Ini fungsi untuk pindah halaman
                                   Get.toNamed(Routes.FORGOT_PASSWORD);
                                 },
                                 child: const Text(
@@ -141,30 +162,84 @@ class LoginView extends GetView<LoginController> {
 
                             const SizedBox(height: 24),
 
-                            // TOMBOL LOGIN UTAMA
+                            // TOMBOL LOGIN UTAMA DENGAN INDIKATOR LOADING
                             SizedBox(
                               width: double.infinity,
                               height: 56,
-                              child: ElevatedButton(
-                                onPressed: () => Get.offAllNamed(Routes.HOME),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF0061A8),
-                                  foregroundColor: Colors.white,
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
+                              child: Obx(() {
+                                return ElevatedButton(
+                                  onPressed: controller.isLoading.value 
+                                      ? null 
+                                      : () => controller.loginUser(),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF0061A8),
+                                    foregroundColor: Colors.white,
+                                    disabledBackgroundColor: const Color(0xFF0061A8).withOpacity(0.6),
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
                                   ),
-                                ),
-                                child: const Text(
-                                  "Login",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 1,
-                                  ),
-                                ),
-                              ),
+                                  child: controller.isLoading.value
+                                      ? const SizedBox(
+                                          height: 24,
+                                          width: 24,
+                                          child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                            strokeWidth: 3,
+                                          ),
+                                        )
+                                      : const Text(
+                                          "Login",
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            letterSpacing: 1,
+                                          ),
+                                        ),
+                                );
+                              }),
                             ),
+
+                            const SizedBox(height: 12),
+
+                            // ─── FITUR LOGIKA BARU: TOMBOL FACE RECOGNITION MANDIRI ───
+                            Obx(() {
+                              bool isActive = controller.isFaceRegistered.value;
+                              return SizedBox(
+                                width: double.infinity,
+                                height: 54,
+                                child: OutlinedButton.icon(
+                                  onPressed: isActive 
+                                      ? () => Get.toNamed(Routes.FACE_LOGIN) 
+                                      : null, // Jika belum daftar wajah, tombol mati (tidak bisa di-klik)
+                                  icon: Icon(
+                                    isActive ? Icons.face_unlock_rounded : Icons.face_retouching_off_rounded, 
+                                    color: isActive ? const Color(0xFF0061A8) : Colors.black38,
+                                    size: 22,
+                                  ),
+                                  label: Text(
+                                    isActive ? "Masuk dengan Verifikasi Wajah" : "Biometrik Wajah Belum Aktif",
+                                    style: TextStyle(
+                                      fontSize: 15, // Ukuran teks yang pas dan proporsional
+                                      fontWeight: FontWeight.w600, // Menggunakan semi-bold agar lebih elegan
+                                      color: isActive ? const Color(0xFF0061A8) : Colors.black38,
+                                      letterSpacing: 0.3,
+                                    ),
+                                  ),
+                                  style: OutlinedButton.styleFrom(
+                                    side: BorderSide(
+                                      color: isActive ? const Color(0xFF0061A8) : Colors.grey.shade300, 
+                                      width: 1.2, // Ketebalan garis border premium
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30), // Mengikuti kelengkungan tombol login utama Anda
+                                    ),
+                                    backgroundColor: isActive ? Colors.transparent : Colors.grey.shade100, // Efek dim saat tidak aktif
+                                  ),
+                                ),
+                              );
+                            }),
 
                             const SizedBox(height: 20),
 
@@ -180,7 +255,7 @@ class LoginView extends GetView<LoginController> {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () => Get.toNamed("/register"),
+                                  onTap: () => Get.toNamed(Routes.REGISTER),
                                   child: const Text(
                                     "Daftar Sekarang",
                                     style: TextStyle(
@@ -236,19 +311,11 @@ class LoginView extends GetView<LoginController> {
           ? Icon(suffixIcon, color: Colors.black38, size: 18)
           : null,
       filled: true,
-      fillColor: const Color(0xFFF3F4F6), // Warna abu muda tipis
+      fillColor: const Color(0xFFF3F4F6),
       contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide.none,
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Color(0xFF0061A8), width: 1),
       ),
     );
   }

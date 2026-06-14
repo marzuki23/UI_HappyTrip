@@ -13,6 +13,7 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const RECOMMENDATION = _Paths.RECOMMENDATION;
   static const ITINERARY = _Paths.ITINERARY;
+  static const FACE_LOGIN = _Paths.FACE_LOGIN;
 }
 
 abstract class _Paths {
@@ -26,4 +27,5 @@ abstract class _Paths {
   static const PROFILE = '/profile';
   static const RECOMMENDATION = '/recommendation';
   static const ITINERARY = '/itinerary';
+  static const FACE_LOGIN = '/face-login';
 }

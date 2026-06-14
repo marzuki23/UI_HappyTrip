@@ -8,13 +8,11 @@ class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Warna background disesuaikan agar lebih soft/biru pucat seperti di gambar
       backgroundColor: const Color(0xFFF0F5F9), 
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            double maxWidth =
-                constraints.maxWidth > 600 ? 400 : constraints.maxWidth * 0.9;
+            double maxWidth = constraints.maxWidth > 600 ? 400 : constraints.maxWidth * 0.9;
 
             return Center(
               child: SingleChildScrollView(
@@ -23,7 +21,6 @@ class RegisterView extends GetView<RegisterController> {
                   constraints: BoxConstraints(maxWidth: maxWidth),
                   child: Column(
                     children: [
-                      // TITLE APP (Di Luar Card)
                       const Text(
                         "HappyTrip",
                         style: TextStyle(
@@ -77,6 +74,7 @@ class RegisterView extends GetView<RegisterController> {
                             // NAMA LENGKAP
                             _buildLabel("Nama Lengkap"),
                             TextField(
+                              onChanged: (value) => controller.nama.value = value,
                               decoration: _inputStyle(
                                 hint: "Masukkan nama Anda",
                                 icon: Icons.person_outline,
@@ -88,6 +86,8 @@ class RegisterView extends GetView<RegisterController> {
                             // EMAIL
                             _buildLabel("Email"),
                             TextField(
+                              onChanged: (value) => controller.email.value = value,
+                              keyboardType: TextInputType.emailAddress,
                               decoration: _inputStyle(
                                 hint: "nama@email.com",
                                 icon: Icons.email_outlined,
@@ -96,16 +96,29 @@ class RegisterView extends GetView<RegisterController> {
 
                             const SizedBox(height: 20),
 
-                            // PASSWORD
+                            // PASSWORD WITH EYE TOGGLE
                             _buildLabel("Password"),
-                            TextField(
-                              obscureText: true,
-                              decoration: _inputStyle(
-                                hint: "Minimal 8 karakter",
-                                icon: Icons.lock_outline,
-                                suffixIcon: Icons.visibility_off_outlined,
-                              ),
-                            ),
+                            Obx(() {
+                              return TextField(
+                                onChanged: (value) => controller.password.value = value,
+                                obscureText: controller.isPasswordHidden.value, // Tergantung status controller
+                                decoration: _inputStyle(
+                                  hint: "Minimal 6 karakter",
+                                  icon: Icons.lock_outline,
+                                  // Menggunakan Widget IconButton agar bisa di-klik oleh pengguna
+                                  suffixWidget: IconButton(
+                                    icon: Icon(
+                                      controller.isPasswordHidden.value
+                                          ? Icons.visibility_off_outlined
+                                          : Icons.visibility_outlined,
+                                      color: Colors.black45,
+                                      size: 20,
+                                    ),
+                                    onPressed: () => controller.togglePasswordVisibility(),
+                                  ),
+                                ),
+                              );
+                            }),
 
                             const SizedBox(height: 35),
 
@@ -113,24 +126,35 @@ class RegisterView extends GetView<RegisterController> {
                             SizedBox(
                               width: double.infinity,
                               height: 54,
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF0061A8),
-                                  foregroundColor: Colors.white,
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
+                              child: Obx(() {
+                                return ElevatedButton(
+                                  onPressed: controller.isLoading.value ? null : () => controller.registerUser(),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF0061A8),
+                                    foregroundColor: Colors.white,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
                                   ),
-                                ),
-                                child: const Text(
-                                  "Daftar",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
+                                  child: controller.isLoading.value
+                                      ? const SizedBox(
+                                          height: 24,
+                                          width: 24,
+                                          child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                            strokeWidth: 3,
+                                          ),
+                                        )
+                                      : const Text(
+                                          "Daftar",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                );
+                              }),
                             ),
                           ],
                         ),
@@ -169,7 +193,6 @@ class RegisterView extends GetView<RegisterController> {
     );
   }
 
-  // Helper untuk Label Input
   Widget _buildLabel(String text) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8, left: 4),
@@ -184,16 +207,16 @@ class RegisterView extends GetView<RegisterController> {
     );
   }
 
-  // Style Input agar sesuai dengan gambar
-  InputDecoration _inputStyle({required String hint, required IconData icon, IconData? suffixIcon}) {
+  // Modifikasi sedikit helper agar menerima suffixWidget berupa kustom widget / IconButton
+  InputDecoration _inputStyle({required String hint, required IconData icon, Widget? suffixWidget}) {
     return InputDecoration(
       hintText: hint,
       hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
       prefixIcon: Icon(icon, color: Colors.black45, size: 20),
-      suffixIcon: suffixIcon != null ? Icon(suffixIcon, color: Colors.black45, size: 20) : null,
+      suffixIcon: suffixWidget, // Memasukkan IconButton kustom di sini
       filled: true,
-      fillColor: const Color(0xFFF3F4F6), // Abu-abu muda sesuai gambar
-      contentPadding: const EdgeInsets.symmetric(vertical: 16),
+      fillColor: const Color(0xFFF3F4F6), 
+      contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide.none,
