@@ -64,26 +64,56 @@ class LoginController extends GetxController {
       if (response.statusCode == 200) {
         var responseData = jsonDecode(response.body);
         
-        // Simpan email data akun secara lokal untuk kebutuhan bypass kamera kelak
-        box.write('user_email', email.value.trim());
-        box.write('token', responseData['access_token']);
+        // 1. Simpan Token
+        String token = responseData['access_token'];
+        box.write('token', token);
 
-        if (responseData['user'] != null && responseData['user']['nama'] != null) {
+        // 2. Simpan Data User (Nama & Email) dari objek 'user' yang dikirim backend
+        if (responseData['user'] != null) {
           box.write('user_nama', responseData['user']['nama']);
+          box.write('user_email', responseData['user']['email']); // Simpan email dari server
+          debugPrint("DEBUG: Data user berhasil disimpan: ${responseData['user']['nama']}");
+        } else {
+          // Fallback jika API lupa kirim objek user, tetap simpan email dari input manual
+          box.write('user_email', email.value.trim());
         }
 
-        // ─── LOGIKA 2: SELEKSI KONDISI PEMAKSAAN REKAM WAJAH PERTAMA KALI ───
-        if (isFaceRegistered.value == true) {
-          _showCustomSnackbar(title: 'Login Berhasil', message: 'Selamat datang kembali di HappyTrip!', isError: false);
-          Get.offAllNamed(Routes.HOME);
-        } else {
-          // Jika baru pertama kali login, paksa masuk halaman Face Login untuk rekam data awal
+        // ─── SYNC LOGIC: SINKRONISASI STATUS DAFTAR WAJAH DARI SERVER ME-ENDPOINT ───
+        try {
+          final String profileUrl = 'http://api.api-happytrip.my.id/auth/me';
+          var profileResponse = await http.get(
+            Uri.parse(profileUrl),
+            headers: {'Authorization': 'Bearer $token'},
+          );
+          if (profileResponse.statusCode == 200) {
+            var profileData = jsonDecode(profileResponse.body);
+            bool isFaceRegOnServer = profileData['is_face_registered'] ?? false;
+            box.write('is_face_active', isFaceRegOnServer);
+            isFaceRegistered.value = isFaceRegOnServer;
+            debugPrint("DEBUG: Sinkronisasi wajah berhasil. Terdaftar di server: $isFaceRegOnServer");
+          }
+        } catch (e) {
+          debugPrint("DEBUG: Gagal sinkronisasi status wajah dari server: $e");
+        }
+
+        // ─── LOGIKA 2: SELEKSI KONDISI PEMAKSAAN REKAM WAJAH ───
+        bool needsFaceReg = (box.read('needs_face_registration') == true) && 
+                            (box.read('registered_email') == email.value.trim());
+
+        if (needsFaceReg) {
           _showCustomSnackbar(
             title: 'Verifikasi Berhasil',
-            message: 'Akun aktif! Selesaikan pendaftaran wajah Anda untuk fitur login instan selanjutnya.',
+            message: 'Akun aktif! Selesaikan pendaftaran wajah Anda.',
             isError: false,
           );
-          Get.toNamed(Routes.FACE_LOGIN);
+          Get.toNamed(Routes.FACE_LOGIN, arguments: email.value.trim());
+        } else {
+          _showCustomSnackbar(
+            title: 'Login Berhasil',
+            message: 'Selamat datang kembali!',
+            isError: false,
+          );
+          Get.offAllNamed(Routes.HOME);
         }
       } else {
         String pesanError = 'Gagal melakukan masuk sistem.';

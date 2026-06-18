@@ -14,6 +14,7 @@ abstract class Routes {
   static const RECOMMENDATION = _Paths.RECOMMENDATION;
   static const ITINERARY = _Paths.ITINERARY;
   static const FACE_LOGIN = _Paths.FACE_LOGIN;
+  static const FACE_SCAN = _Paths.FACE_SCAN;
 }
 
 abstract class _Paths {
@@ -28,4 +29,5 @@ abstract class _Paths {
   static const RECOMMENDATION = '/recommendation';
   static const ITINERARY = '/itinerary';
   static const FACE_LOGIN = '/face-login';
+  static const FACE_SCAN = '/face-scan';
 }

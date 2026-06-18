@@ -211,7 +211,23 @@ class LoginView extends GetView<LoginController> {
                                 height: 54,
                                 child: OutlinedButton.icon(
                                   onPressed: isActive 
-                                      ? () => Get.toNamed(Routes.FACE_LOGIN) 
+                                      ? () {
+                                          String targetEmail = controller.email.value.trim();
+                                          if (targetEmail.isEmpty) {
+                                            targetEmail = controller.box.read('user_email') ?? '';
+                                          }
+                                          if (targetEmail.isEmpty) {
+                                            Get.snackbar(
+                                              'Email Diperlukan',
+                                              'Silakan masukkan email Anda terlebih dahulu untuk menggunakan masuk wajah.',
+                                              snackPosition: SnackPosition.TOP,
+                                              backgroundColor: const Color(0xFFBA1A1A),
+                                              colorText: Colors.white,
+                                            );
+                                            return;
+                                          }
+                                          Get.toNamed(Routes.FACE_LOGIN, arguments: targetEmail);
+                                        }
                                       : null, // Jika belum daftar wajah, tombol mati (tidak bisa di-klik)
                                   icon: Icon(
                                     isActive ? Icons.face_unlock_rounded : Icons.face_retouching_off_rounded, 

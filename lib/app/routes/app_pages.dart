@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/face_login/bindings/face_login_binding.dart';
 import '../modules/face_login/views/face_login_view.dart';
+import '../modules/face_scan/bindings/face_scan_binding.dart';
+import '../modules/face_scan/views/face_scan_view.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -76,6 +78,11 @@ class AppPages {
       name: _Paths.FACE_LOGIN,
       page: () => const FaceLoginView(),
       binding: FaceLoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.FACE_SCAN,
+      page: () => FaceScanView(),
+      binding: FaceScanBinding(),
     ),
   ];
 }

@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import '../../../routes/app_pages.dart'; 
 
 class RegisterController extends GetxController {
   var nama = ''.obs;
@@ -9,6 +11,7 @@ class RegisterController extends GetxController {
   var password = ''.obs;
 
   var isLoading = false.obs;
+  final box = GetStorage();
   
   // ─── FITUR BARU: VARIABEL UNTUK SELEKSI LIHAT PASSWORD ───
   var isPasswordHidden = true.obs;
@@ -63,12 +66,13 @@ class RegisterController extends GetxController {
       isLoading.value = false;
 
       if (response.statusCode == 200) {
+        box.write('needs_face_registration', true);
+        box.write('registered_email', email.value.trim());
         _showSuccessDialog();
       } else {
         String pesanError = 'Tidak dapat memproses pendaftaran saat ini.';
         
         try {
-          // jsonDecode ini otomatis membaca teks kustom: "Email sudah terdaftar! Silakan gunakan email lain atau langsung masuk." dari backend baru
           var errorData = jsonDecode(response.body);
           if (errorData['detail'] != null) {
             pesanError = errorData['detail'];
@@ -110,7 +114,7 @@ class RegisterController extends GetxController {
             ),
             const SizedBox(height: 12),
             Text(
-              'Akun Anda atas nama "${nama.value}" berhasil didaftarkan. Harap periksa folder kotak masuk atau spam pada email ${email.value} untuk mengaktifkan akun Anda sebelum masuk.',
+              'Akun Anda atas nama "${nama.value}" berhasil didaftarkan. Harap periksa kotak masuk atau spam pada email ${email.value} untuk verifikasi terlebih dahulu.',
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 14, color: Colors.black54, height: 1.4),
             ),
@@ -120,8 +124,8 @@ class RegisterController extends GetxController {
               height: 48,
               child: ElevatedButton(
                 onPressed: () {
-                  Get.back();
-                  Get.back();
+                  // Arahkan ke halaman login
+                  Get.offAllNamed(Routes.LOGIN); 
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF0061A8),
@@ -129,7 +133,7 @@ class RegisterController extends GetxController {
                   elevation: 0,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-                child: const Text('Ke Halaman Login', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                child: const Text('Lanjut ke Login', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
               ),
             ),
           ],
