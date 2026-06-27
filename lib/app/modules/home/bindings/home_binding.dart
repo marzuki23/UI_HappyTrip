@@ -6,8 +6,8 @@ import '../../profile/controllers/profile_controller.dart';
 class HomeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<HomeController>(() => HomeController());
-    Get.lazyPut<TripController>(() => TripController());
-    Get.lazyPut<ProfileController>(() => ProfileController());
+    Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
+    Get.lazyPut<TripController>(() => TripController(), fenix: true);
+    Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
   }
 }

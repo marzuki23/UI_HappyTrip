@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../routes/app_pages.dart';
+import '../../../services/trip_log_service.dart';
 
 class ProfileController extends GetxController {
   // Observable untuk menampung data nama dan email secara dinamis
@@ -30,6 +31,11 @@ class ProfileController extends GetxController {
     box.remove('token');
     box.remove('user_email');
     box.remove('user_nama'); // Ikut bersihkan cache nama saat keluar aplikasi
+    
+    // Sinkronisasi ulang log agar kosong atau menggunakan key guest
+    if (Get.isRegistered<TripLogService>()) {
+      TripLogService.to.loadLogs();
+    }
     
     Get.offAllNamed(Routes.LOGIN);
   }

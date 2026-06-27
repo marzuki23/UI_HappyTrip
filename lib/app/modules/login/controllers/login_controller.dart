@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import '../../../routes/app_pages.dart';
+import '../../../services/trip_log_service.dart';
 
 class LoginController extends GetxController {
   var email = ''.obs;
@@ -76,6 +77,11 @@ class LoginController extends GetxController {
         } else {
           // Fallback jika API lupa kirim objek user, tetap simpan email dari input manual
           box.write('user_email', email.value.trim());
+        }
+
+        // Sinkronisasi log perjalanan untuk pengguna baru
+        if (Get.isRegistered<TripLogService>()) {
+          TripLogService.to.loadLogs();
         }
 
         // ─── SYNC LOGIC: SINKRONISASI STATUS DAFTAR WAJAH DARI SERVER ME-ENDPOINT ───

@@ -7,6 +7,7 @@ class RecommendationBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<RecommendationController>(
       () => RecommendationController(),
+      fenix: true,
     );
   }
 }

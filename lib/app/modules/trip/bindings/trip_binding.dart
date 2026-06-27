@@ -6,9 +6,10 @@ import '../controllers/trip_controller.dart';
 class TripBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put<HomeController>(HomeController());
+    Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
     Get.lazyPut<TripController>(
       () => TripController(),
+      fenix: true,
     );
   }
 }

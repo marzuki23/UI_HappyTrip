@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import '../../../routes/app_pages.dart';
 import '../../../services/face_recognition_service.dart';
+import '../../../services/trip_log_service.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 
 class FaceLoginController extends GetxController {
@@ -124,6 +125,11 @@ class FaceLoginController extends GetxController {
             box.write('user_email', responseData['user']['email']);
           }
 
+          // Sinkronisasi log perjalanan
+          if (Get.isRegistered<TripLogService>()) {
+            TripLogService.to.loadLogs();
+          }
+
           _showStatusDialog('Registrasi Sukses!', 'Wajah berhasil disimpan.', true);
         } else if (responseData['status'] == 'success') {
           box.write('is_face_active', true);
@@ -135,6 +141,11 @@ class FaceLoginController extends GetxController {
           if (responseData['user'] != null) {
             box.write('user_nama', responseData['user']['nama']);
             box.write('user_email', responseData['user']['email']);
+          }
+
+          // Sinkronisasi log perjalanan
+          if (Get.isRegistered<TripLogService>()) {
+            TripLogService.to.loadLogs();
           }
 
           _showSnackbar('Login Berhasil', 'Selamat datang kembali!', false);

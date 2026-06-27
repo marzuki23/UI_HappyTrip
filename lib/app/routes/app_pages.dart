@@ -18,6 +18,7 @@ import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
+import '../modules/activity_log/views/activity_log_view.dart';
 
 part 'app_routes.dart';
 
@@ -83,6 +84,10 @@ class AppPages {
       name: _Paths.FACE_SCAN,
       page: () => FaceScanView(),
       binding: FaceScanBinding(),
+    ),
+    GetPage(
+      name: _Paths.ACTIVITY_LOG,
+      page: () => const ActivityLogView(),
     ),
   ];
 }

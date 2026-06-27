@@ -15,6 +15,7 @@ abstract class Routes {
   static const ITINERARY = _Paths.ITINERARY;
   static const FACE_LOGIN = _Paths.FACE_LOGIN;
   static const FACE_SCAN = _Paths.FACE_SCAN;
+  static const ACTIVITY_LOG = _Paths.ACTIVITY_LOG;
 }
 
 abstract class _Paths {
@@ -30,4 +31,5 @@ abstract class _Paths {
   static const ITINERARY = '/itinerary';
   static const FACE_LOGIN = '/face-login';
   static const FACE_SCAN = '/face-scan';
+  static const ACTIVITY_LOG = '/activity-log';
 }
