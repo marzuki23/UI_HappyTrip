@@ -232,27 +232,7 @@ class ItineraryController extends GetxController {
 
   double _toRadians(double deg) => deg * pi / 180.0;
 
-  void calculateDynamicCosts() {
-    // 1. Hitung biaya makan & penginapan
-    double mealCost = 100000.0 * cachedDurationDays;
-    double lodgingCost = 200000.0 * (cachedDurationDays - 1);
-    foodLodgingCost.value = mealCost + lodgingCost;
 
-    // 2. Hitung biaya transportasi
-    String userLoc = _normalizeCity(cachedUserLocation);
-    String destLoc = _normalizeCity(cachedDestination);
-
-    double km = _calculateDistance(userLoc, destLoc);
-    distanceKm.value = km;
-
-    bool isLocal = (userLoc == destLoc);
-
-    if (isLocal) {
-      _calculateLocalCost(cachedVehicleType, cachedSubVehicle);
-    } else {
-      _calculateIntercityCost(cachedVehicleType, cachedSubVehicle, km);
-    }
-  }
 
   String _normalizeCity(String raw) {
     final normalized = raw.trim();
