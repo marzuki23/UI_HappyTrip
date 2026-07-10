@@ -91,9 +91,9 @@ class TripView extends GetView<TripController> {
                           )
                           .toList(),
                       onChanged: (value) {
-                          if (value != null) {
-                            controller.selectedCategory.value = value;
-                          }
+                        if (value != null) {
+                          controller.selectedCategory.value = value;
+                        }
                       },
                       decoration: _inputStyle(),
                     );
@@ -166,8 +166,8 @@ class TripView extends GetView<TripController> {
                       );
                     }
                     return DropdownButtonFormField<String>(
-                      value: controller.selectedDestination.value.isEmpty 
-                          ? null 
+                      value: controller.selectedDestination.value.isEmpty
+                          ? null
                           : controller.selectedDestination.value,
                       icon: const Icon(Icons.keyboard_arrow_down_rounded),
                       style: const TextStyle(
@@ -202,34 +202,36 @@ class TripView extends GetView<TripController> {
                   _buildSpacing(),
 
                   _buildLabel("JENIS KENDARAAN"),
-                  Obx(() => DropdownButtonFormField<String>(
-                    value: controller.selectedVehicle.value,
-                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                    style: const TextStyle(
-                      color: Colors.black87,
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    items: controller.vehicleList
-                        .map(
-                          (e) => DropdownMenuItem(
-                            value: e,
-                            child: Text(
-                              e,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.normal,
+                  Obx(
+                    () => DropdownButtonFormField<String>(
+                      value: controller.selectedVehicle.value,
+                      icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                      style: const TextStyle(
+                        color: Colors.black87,
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                      ),
+                      items: controller.vehicleList
+                          .map(
+                            (e) => DropdownMenuItem(
+                              value: e,
+                              child: Text(
+                                e,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (value) {
-                      if (value != null) {
-                        controller.onVehicleChanged(value);
-                      }
-                    },
-                    decoration: _inputStyle(),
-                  )),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        if (value != null) {
+                          controller.onVehicleChanged(value);
+                        }
+                      },
+                      decoration: _inputStyle(),
+                    ),
+                  ),
 
                   // CASCADING DROPDOWN: TIPE KENDARAAN (Dinamis Berjenjang)
                   Obx(() {
@@ -253,7 +255,8 @@ class TripView extends GetView<TripController> {
                             fontWeight: FontWeight.normal,
                           ),
                           hint: Text(
-                            controller.selectedVehicle.value == "Kendaraan Pribadi"
+                            controller.selectedVehicle.value ==
+                                    "Kendaraan Pribadi"
                                 ? "Pilih Mobil / Motor"
                                 : "Pilih Kereta / Bis",
                             style: TextStyle(
@@ -262,7 +265,8 @@ class TripView extends GetView<TripController> {
                               fontWeight: FontWeight.normal,
                             ),
                           ),
-                          items: controller.getSubVehicleList()
+                          items: controller
+                              .getSubVehicleList()
                               .map(
                                 (e) => DropdownMenuItem(
                                   value: e,
@@ -288,45 +292,18 @@ class TripView extends GetView<TripController> {
 
                   _buildSpacing(),
 
-                  Row(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        flex: 6,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildLabel("BUDGET PERJALANAN"),
-                            TextField(
-                              controller: controller.budgetController,
-                              keyboardType: TextInputType.number,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
-                              ),
-                              decoration: _inputStyle(hint: "Contoh: 1000000"),
-                            ),
-                          ],
+                      _buildLabel("DURASI"),
+                      TextField(
+                        controller: controller.durationController,
+                        keyboardType: TextInputType.number,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 14,
                         ),
-                      ),
-                      const SizedBox(width: 15),
-                      Expanded(
-                        flex: 4,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildLabel("DURASI"),
-                            TextField(
-                              controller: controller.durationController,
-                              keyboardType: TextInputType.number,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
-                              ),
-                              decoration: _inputStyle(hint: "Contoh: 2 (Hari)"),
-                            ),
-                          ],
-                        ),
+                        decoration: _inputStyle(hint: "Contoh: 1 (Hari)"),
                       ),
                     ],
                   ),

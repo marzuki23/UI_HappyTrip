@@ -1,4 +1,5 @@
 class TripLog {
+  final int? id;          // ← ID dari Neon DB, null jika belum tersimpan di server
   final String title;
   final String dateRange;
   final String destination;
@@ -11,6 +12,7 @@ class TripLog {
   final DateTime savedAt;
 
   TripLog({
+    this.id,
     required this.title,
     required this.dateRange,
     required this.destination,
@@ -25,6 +27,7 @@ class TripLog {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'title': title,
       'dateRange': dateRange,
       'destination': destination,
@@ -40,6 +43,7 @@ class TripLog {
 
   factory TripLog.fromJson(Map<String, dynamic> json) {
     return TripLog(
+      id: json['id'] as int?,
       title: json['title'] ?? '',
       dateRange: json['dateRange'] ?? '',
       destination: json['destination'] ?? '',
@@ -53,3 +57,4 @@ class TripLog {
     );
   }
 }
+

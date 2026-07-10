@@ -346,11 +346,6 @@ class ItineraryView extends GetView<ItineraryController> {
                 ),
               ],
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 12),
-              child: Divider(),
-            ),
-            _buildBudgetTrackerWidget(),
           ],
         ),
       ),
@@ -374,87 +369,7 @@ class ItineraryView extends GetView<ItineraryController> {
     );
   }
 
-  Widget _buildBudgetTrackerWidget() {
-    final bool within = controller.isWithinBudget;
-    final double budget = controller.userBudget;
-    final double diff = (controller.totalEstimation - budget).abs();
 
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: within ? const Color(0xFFE8F5E9) : const Color(0xFFFFEBEE),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: within ? const Color(0xFF81C784) : const Color(0xFFE57373),
-          width: 1,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                within ? Icons.check_circle_rounded : Icons.warning_rounded,
-                color: within
-                    ? const Color(0xFF2E7D32)
-                    : const Color(0xFFC62828),
-                size: 20,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                within ? "Sesuai Budget" : "Melebihi Budget!",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                  color: within
-                      ? const Color(0xFF2E7D32)
-                      : const Color(0xFFC62828),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Budget Anda:",
-                style: TextStyle(fontSize: 12, color: Colors.grey.shade700),
-              ),
-              Text(
-                controller.formatRupiah(budget),
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                within ? "Sisa Saldo:" : "Kurang Saldo:",
-                style: TextStyle(fontSize: 12, color: Colors.grey.shade700),
-              ),
-              Text(
-                controller.formatRupiah(diff),
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: within
-                      ? const Color(0xFF2E7D32)
-                      : const Color(0xFFC62828),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _costRow(String label, String val, {bool isBold = false}) {
     return Padding(

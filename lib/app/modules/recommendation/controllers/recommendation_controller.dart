@@ -107,11 +107,7 @@ class RecommendationController extends GetxController {
           return isLocMatch && isCatMatch;
         }).toList();
 
-        // Filter Berdasarkan Budget
-        final double userBudget = double.tryParse(tripCtrl.budgetController.text) ?? 0;
-        if (userBudget > 0) {
-          filtered = filtered.where((item) => item['price'] <= userBudget).toList();
-        }
+
 
         // ─── SORTING ───
         filtered.sort((a, b) {

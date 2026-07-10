@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 class TripController extends GetxController {
   // Text Editing Controllers for manual input fields
   final TextEditingController userLocationController = TextEditingController();
-  final TextEditingController budgetController = TextEditingController();
   final TextEditingController durationController = TextEditingController();
 
   // Reactive states for dropdown fields
@@ -36,7 +35,6 @@ class TripController extends GetxController {
   /// Reset semua input form ke kosong/default untuk perjalanan baru
   void resetForm() {
     userLocationController.text = destinationList.isNotEmpty ? destinationList.first : "Semarang";
-    budgetController.clear();
     durationController.clear();
     _resetDropdowns();
   }
@@ -173,31 +171,12 @@ class TripController extends GetxController {
   bool validateInputs() {
     // Baca langsung dari controller agar tidak ada masalah state reactive vs non-reactive
     final String userLocation = userLocationController.text.trim();
-    final String budgetText = budgetController.text.trim();
     final String durationText = durationController.text.trim();
 
     if (userLocation.isEmpty) {
       _showErrorSnackbar(
         title: "Lokasi Kosong",
         message: "Silakan masukkan lokasi asal Anda saat ini.",
-      );
-      return false;
-    }
-
-    if (budgetText.isEmpty) {
-      _showErrorSnackbar(
-        title: "Budget Kosong",
-        message: "Silakan tentukan budget maksimal perjalanan Anda.",
-      );
-      return false;
-    }
-
-    final budgetVal = double.tryParse(budgetText);
-
-    if (budgetVal == null || budgetVal <= 0) {
-      _showErrorSnackbar(
-        title: "Budget Tidak Valid",
-        message: "Masukkan jumlah budget berupa angka positif.",
       );
       return false;
     }

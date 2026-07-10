@@ -5,6 +5,8 @@ import '../../profile/views/profile_view.dart';
 import '../../trip/views/trip_view.dart';
 import '../../../widgets/bottom_nav_widget.dart';
 import '../../../widgets/header_widget.dart';
+import '../top_destinations_widget.dart';
+import '../category_density_chart_widget.dart';
 
 class HomeView extends StatefulWidget {
   final int initialIndex;
@@ -171,6 +173,12 @@ class _HomeContent extends StatelessWidget {
               ],
             ),
           ),
+          // WIDGET PAPAN PERINGKAT DATA APIFY
+          const SizedBox(height: 24), 
+          const TopDestinationsWidget(),
+
+          const SizedBox(height: 16),
+          const CategoryDensityChartWidget(),
         ],
       ),
     );

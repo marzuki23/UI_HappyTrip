@@ -69,14 +69,24 @@ class LoginController extends GetxController {
         String token = responseData['access_token'];
         box.write('token', token);
 
+        String userEmailStr = email.value.trim();
+
         // 2. Simpan Data User (Nama & Email) dari objek 'user' yang dikirim backend
         if (responseData['user'] != null) {
+          userEmailStr = responseData['user']['email'] ?? userEmailStr;
           box.write('user_nama', responseData['user']['nama']);
-          box.write('user_email', responseData['user']['email']); // Simpan email dari server
+          box.write('user_nama_$userEmailStr', responseData['user']['nama']);
+          box.write('user_email', userEmailStr); // Simpan email dari server
+          
+          String? fotoUrl = responseData['user']['foto_url'] ?? responseData['user']['profile_picture'];
+          if (fotoUrl != null) {
+            box.write('user_photo_path', fotoUrl);
+            box.write('user_photo_path_$userEmailStr', fotoUrl);
+          }
           debugPrint("DEBUG: Data user berhasil disimpan: ${responseData['user']['nama']}");
         } else {
           // Fallback jika API lupa kirim objek user, tetap simpan email dari input manual
-          box.write('user_email', email.value.trim());
+          box.write('user_email', userEmailStr);
         }
 
         // Sinkronisasi log perjalanan untuk pengguna baru
@@ -96,6 +106,18 @@ class LoginController extends GetxController {
             bool isFaceRegOnServer = profileData['is_face_registered'] ?? false;
             box.write('is_face_active', isFaceRegOnServer);
             isFaceRegistered.value = isFaceRegOnServer;
+            
+            String? fotoUrl = profileData['foto_url'] ?? profileData['profile_picture'];
+            if (fotoUrl != null) {
+              box.write('user_photo_path', fotoUrl);
+              box.write('user_photo_path_$userEmailStr', fotoUrl);
+            }
+            
+            String? namaUser = profileData['nama'];
+            if (namaUser != null) {
+              box.write('user_nama', namaUser);
+              box.write('user_nama_$userEmailStr', namaUser);
+            }
             debugPrint("DEBUG: Sinkronisasi wajah berhasil. Terdaftar di server: $isFaceRegOnServer");
           }
         } catch (e) {

@@ -12,18 +12,25 @@ class RecommendationView extends GetView<RecommendationController> {
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       appBar: AppBar(
-        title: const Text("Rekomendasi Wisata", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+        title: const Text(
+          "Rekomendasi Wisata",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black87,
         elevation: 0.5,
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator(color: Color(0xFF0061A8)));
+          return const Center(
+            child: CircularProgressIndicator(color: Color(0xFF0061A8)),
+          );
         }
 
         if (controller.recommendedDestinations.isEmpty) {
-          return const Center(child: Text("Tidak ada rekomendasi wisata yang cocok."));
+          return const Center(
+            child: Text("Tidak ada rekomendasi wisata yang cocok."),
+          );
         }
 
         return ListView.builder(
@@ -41,7 +48,9 @@ class RecommendationView extends GetView<RecommendationController> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: isSelected ? const Color(0xFF0061A8) : Colors.transparent,
+                      color: isSelected
+                          ? const Color(0xFF0061A8)
+                          : Colors.transparent,
                       width: 2,
                     ),
                     boxShadow: [
@@ -49,36 +58,46 @@ class RecommendationView extends GetView<RecommendationController> {
                         color: const Color.fromRGBO(0, 0, 0, 0.03),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
-                      )
+                      ),
                     ],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ClipRRect(
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
+                        borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(14),
+                        ),
                         child: Image.network(
                           item['image'] ?? '',
                           height: 160,
                           width: double.infinity,
                           fit: BoxFit.cover,
                           // Mencegah munculnya Exception error "Unable to load asset" jika server image bermasalah
-                          errorBuilder: (context, error, stackTrace) => Container(
-                            height: 160,
-                            color: Colors.grey.shade200,
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.image_not_supported_rounded, color: Colors.grey, size: 36),
-                                const SizedBox(height: 4),
-                                Text(
-                                  "Gambar tidak tersedia",
-                                  style: TextStyle(color: Colors.grey.shade500, fontSize: 11),
-                                )
-                              ],
-                            ),
-                          ),
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
+                                height: 160,
+                                color: Colors.grey.shade200,
+                                alignment: Alignment.center,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.image_not_supported_rounded,
+                                      color: Colors.grey,
+                                      size: 36,
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      "Gambar tidak tersedia",
+                                      style: TextStyle(
+                                        color: Colors.grey.shade500,
+                                        fontSize: 11,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                         ),
                       ),
                       Padding(
@@ -92,19 +111,28 @@ class RecommendationView extends GetView<RecommendationController> {
                                 Expanded(
                                   child: Text(
                                     item['name'] ?? 'Wisata Tanpa Nama',
-                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                                 Row(
                                   children: [
-                                    const Icon(Icons.star_rounded, color: Colors.amber, size: 20),
+                                    const Icon(
+                                      Icons.star_rounded,
+                                      color: Colors.amber,
+                                      size: 20,
+                                    ),
                                     const SizedBox(width: 4),
                                     Text(
-                                      (item['rating'] ?? 5.0).toString(), 
-                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                      (item['rating'] ?? 5.0).toString(),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ],
-                                )
+                                ),
                               ],
                             ),
                             const SizedBox(height: 4),
@@ -112,16 +140,25 @@ class RecommendationView extends GetView<RecommendationController> {
                               item['description'] ?? '',
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
+                              style: TextStyle(
+                                color: Colors.grey.shade600,
+                                fontSize: 13,
+                              ),
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              controller.formatRupiah((item['price'] ?? 0.0).toDouble()),
-                              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFF0061A8)),
-                            )
+                              controller.formatRupiah(
+                                (item['price'] ?? 0.0).toDouble(),
+                              ),
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF0061A8),
+                              ),
+                            ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -146,11 +183,17 @@ class RecommendationView extends GetView<RecommendationController> {
               onPressed: () => Get.toNamed(Routes.ITINERARY),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF0061A8),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
               child: Text(
                 "Buat Perjalanan (${controller.selectedIndices.length} Wisata)",
-                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
               ),
             ),
           ),
