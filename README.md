@@ -121,6 +121,14 @@ flutter run
 
 ---
 
+## Tersedia di Google Play Store
+
+HappyTrip sudah tersedia dan dapat diunduh langsung dari Google Play Store. Silakan download sekarang untuk mulai merencanakan perjalanan impianmu.
+
+[<img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play Store" width="200">](https://play.google.com/store/apps/details?id=com.hn.happytrip)
+
+---
+
 ## Struktur Proyek
 
 ```
@@ -175,7 +183,7 @@ Data mengalir: `View → Controller → Service → API/Database`
 ## Kontributor
 
 - **Idris** — Developer & Designer
-- **Bryan** — Developer & Designer
+- **Briyan** — Developer & Designer
 
 ---
 
